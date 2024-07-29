@@ -1,0 +1,23 @@
+<?php
+
+namespace App;
+
+class Cart {
+
+    private float $price;
+    
+    private static float $tax = 1.5;
+
+    public function getNetPrice(): float {
+        return $this->price * self::$tax;
+    }
+
+    public static function setTax($tax)
+    {
+        self::$tax = $tax;
+    }
+
+    public function setPrice(float $price): void {
+        $this->price = $price;
+    }
+}
