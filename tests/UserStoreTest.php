@@ -18,6 +18,9 @@ use PHPUnit\Framework\TestCase;
 
 // print_r($store);
 
+// php vendor/bin/phpunit tests/CartTest.php --colors --testdox
+
+
 
 class UserStoreTest extends TestCase 
 {
