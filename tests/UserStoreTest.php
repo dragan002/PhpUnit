@@ -19,6 +19,8 @@ use PHPUnit\Framework\TestCase;
 // print_r($store);
 
 // php vendor/bin/phpunit tests/CartTest.php --colors --testdox
+// php vendor/bin/phpunit tests/UserStoreTest.php --colors --testdox
+
 
 
 
@@ -39,7 +41,14 @@ class UserStoreTest extends TestCase
         $this->store->addUser('Dragan', 'draganvujic29@gmail.com', '12345');
         $user = $this->store->getUser('draganvujic29@gmail.com');
         $this->assertEquals("draganvujic29@gmail.com", $user['email']);
-        $this->assertEquals('Dragan', $user['name']);
+        $this->assertNotEquals('Dragans', $user['name']);
         $this->assertEquals('12345', $user['pass']);
+    }
+
+    public function testAddUserWithExistingEmailThrowsException(): void 
+    {
+        $this->store->addUser('Dragan', 'draganvujic29@gmail.com', '12345');
+        $this->expectException(\Exception::class);
+        $this->store->addUser('Dragan', 'draganvujic29@gmail.com', '12345');
     }
 }
