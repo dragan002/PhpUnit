@@ -51,4 +51,12 @@ class UserStoreTest extends TestCase
         $this->expectException(\Exception::class);
         $this->store->addUser('Dragan', 'draganvujic29@gmail.com', '12345');
     }
+
+    public function testNotifyPasswordFailureUpdatesCount(): void {
+        $this->store->addUser('Dragan', 'draganvujic29@gmail.com', '12345');
+        $this->store->notifyPasswordFailure('draganvujic29@gmail.com');
+        $user = $this->store->getUser('draganvujic29@gmail.com');
+        $this->assertArrayHasKey('failed', $user);
+        $this->assertNotNull($user['failed']);
+    }
 }
