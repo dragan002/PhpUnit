@@ -8,16 +8,14 @@ class UserStore
 
     public function addUser(string $name, string $email, string $pass): bool 
     {
-        if(isset($this->users[$email])) {
-            throw new \Exception(
-                "User with email {$email} already exists."
-            );
+        $email = trim($email); // Normalize the email to prevent errors related to formatting
+
+        if (isset($this->users[$email])) {
+            throw new \Exception("User with email {$email} already exists.");
         }
 
-        if(strlen($pass) < 5) {
-            throw new \Exception(
-                "Password must be at least 5 characters long."
-            );
+        if (strlen($pass) < 6) { // Ensure password is at least 6 characters long
+            throw new \Exception("Password must be at least 6 characters long.");
         }
         
         $this->users[$email] = [
@@ -30,12 +28,13 @@ class UserStore
 
     public function notifyPasswordFailure(string $email): void 
     {
-        if(isset($this->users[$email])) {
+        if (isset($this->users[$email])) {
             $this->users[$email]['failed'] = time();
         }
     }
 
-    public function getUser(string $email): array{
-        return $this->users[$email];
+    public function getUser(string $email): ?array 
+    {
+        return $this->users[$email] ?? null; // Prevent "undefined index" error
     }
 }
