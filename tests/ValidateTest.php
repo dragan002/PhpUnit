@@ -24,4 +24,11 @@ class ValidateTest extends TestCase
             $this->validator->validateUser('draganvujic29@gmail.com', '123456'),
             'Exception successfull validation');
     }
+
+    // public function testValidateFalsePass(): void
+    // {
+    //     $store = $this->createMock(UserStore::class);
+    //     $this->validator = new Validator($store);
+
+    // }
 }

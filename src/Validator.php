@@ -12,16 +12,20 @@ class Validator {
     }
 
     public function validateUser(string $email, string $pass): bool
+
     {
-        if(!is_array($user = $this->store->getUser($email))) {
+        $user = $this->store->getUser($email);
+        if (is_null($user)) {
             return false;
         }
 
-        if($user['pass'] == $pass) {
+        $testPass = $user->getPass();
+        if($testPass == $pass) {
             return true;
         }
 
         $this->store->notifyPasswordFailure($email);
         return false;
-    }   
+
+    }
 }

@@ -2,6 +2,9 @@
 
 namespace App;
 
+use App\User;
+
+
 class UserStore 
 {
     private array $users = [];
@@ -18,11 +21,12 @@ class UserStore
             throw new \Exception("Password must be at least 6 characters long.");
         }
         
-        $this->users[$email] = [
-            'name' => $name,
-            'email' => $email,
-            'pass' => $pass
-        ];
+        $this->users[$email] = new User($name, $email, $pass);
+        // $this->users[$email] = [
+        //     'name' => $name,
+        //     'email' => $email,
+        //     'pass' => $pass,
+        //     ];
         return true;
     }
 
@@ -33,8 +37,12 @@ class UserStore
         }
     }
 
-    public function getUser(string $email): ?array 
+    public function getUser(string $email): object 
     {
-        return $this->users[$email] ?? null; // Prevent "undefined index" error
+        if(!isset($this->users[$email])) {
+            return null;
+        }
+
+        return $this->users[$email];
     }
 }
